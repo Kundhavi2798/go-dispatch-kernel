@@ -1,0 +1,58 @@
+syntax = "proto3";
+
+package dispatch.v1;
+
+option go_package = "dispatchkernel/gen/dispatch/v1;dispatchv1";
+
+service DispatchService {
+  rpc UpsertCandidate(UpsertCandidateRequest) returns (UpsertCandidateResponse);
+  rpc DeleteCandidate(DeleteCandidateRequest) returns (DeleteCandidateResponse);
+  rpc Dispatch(DispatchRequest) returns (DispatchResponse);
+}
+
+message Location {
+  double latitude = 1;
+  double longitude = 2;
+}
+
+message Candidate {
+  string id = 1;
+  Location location = 2;
+}
+
+message UpsertCandidateRequest {
+  Candidate candidate = 1;
+}
+
+message UpsertCandidateResponse {}
+
+message DeleteCandidateRequest {
+  string id = 1;
+}
+
+message DeleteCandidateResponse {
+  bool deleted = 1;
+}
+
+message DispatchRequest {
+  string id = 1;
+  Location pickup = 2;
+  int32 max_candidates = 3;
+}
+
+message Route {
+  bool reachable = 1;
+  double distance_meters = 2;
+  double duration_seconds = 3;
+}
+
+message RankedCandidate {
+  Candidate candidate = 1;
+  Route route = 2;
+  double cost = 3;
+}
+
+message DispatchResponse {
+  string request_id = 1;
+  repeated RankedCandidate candidates = 2;
+}

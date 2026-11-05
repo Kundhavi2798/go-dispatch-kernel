@@ -1,0 +1,5 @@
+/candidates.db
+/candidates.db-lock
+*.pprof
+*.test
+*.test.exe
