@@ -298,6 +298,32 @@ go test ./internal/kernel ./internal/spatial -run '^$' \
   -bench 'BenchmarkDispatchPipeline|BenchmarkH3IndexSearchParallel' \
   -benchmem -cpu=1,2,4,8
 ```
+Unit Testcase Result :
+<img width="660" height="282" alt="image" src="https://github.com/user-attachments/assets/75dd0109-87d7-4ba2-8040-98d7ce67fba0" />
+
+Benchmarkdispatch Result :
+
+goos: windows
+goarch: amd64
+pkg: dispatchkernel/internal/kernel
+cpu: AMD Ryzen 5 7535HS with Radeon Graphics        
+BenchmarkDispatchPipeline           5328            220830 ns/op           30056 B/op         18 allocs/op
+BenchmarkDispatchPipeline-2        10000            105374 ns/op           30056 B/op         18 allocs/op
+BenchmarkDispatchPipeline-4        21306             55942 ns/op           30056 B/op         18 allocs/op
+BenchmarkDispatchPipeline-8        26968             43376 ns/op           30056 B/op         18 allocs/op
+PASS
+ok      dispatchkernel/internal/kernel  6.503s
+goos: windows
+goarch: amd64
+pkg: dispatchkernel/internal/spatial
+cpu: AMD Ryzen 5 7535HS with Radeon Graphics        
+BenchmarkH3IndexSearchParallel              5540            231763 ns/op           11960 B/op          8 allocs/op
+BenchmarkH3IndexSearchParallel-2           10000            115975 ns/op           11960 B/op          8 allocs/op
+BenchmarkH3IndexSearchParallel-4           19882             57315 ns/op           11960 B/op          8 allocs/op
+BenchmarkH3IndexSearchParallel-8           34312             34585 ns/op           11960 B/op          8 allocs/op
+PASS
+ok      dispatchkernel/internal/spatial 6.062s
+
 
 On the development PC (AMD Ryzen 5 7535HS, Go 1.26, Windows), a one-second
 benchmark run measured about **221 µs/op** for the in-memory dispatch pipeline
